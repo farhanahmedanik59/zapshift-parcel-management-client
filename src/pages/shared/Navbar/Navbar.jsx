@@ -1,8 +1,12 @@
 import React from "react";
 import Logo from "../../../components/Logo/Logo";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import useAuth from "../../../hooks/useAuth";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../firebase/firebase.config";
 
 const Navbar = () => {
+  const { user } = useAuth();
   const links = (
     <>
       <li>
@@ -40,7 +44,23 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          {user ? (
+            <a
+              className="btn bg-primary"
+              onClick={() => {
+                signOut(auth);
+              }}
+            >
+              Logout
+            </a>
+          ) : (
+            <Link to={"/login"} className=" btn bg-primary">
+              Login
+            </Link>
+          )}
+          <Link to={"/"} className="btn bg-primary ml-1.5 text-black">
+            Be a Rider
+          </Link>
         </div>
       </div>
     </div>
