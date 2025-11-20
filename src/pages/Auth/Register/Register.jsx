@@ -1,16 +1,28 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContex } from "../../../contexts/AuthContex/AuthContex";
+import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
-  const { registerUser } = useContext(AuthContex);
+  const { registerUser, updateUserProfile } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const handleregister = (data) => {
-    registerUser(data.email, data.password).then((usercred) => console.log(usercred.user));
+    const profileImage = data.image[0];
+    registerUser(data.email, data.password).then((usercred) => {
+      if (usercred) {
+        const formdata = new FormData();
+        formdata.append("image", profileImage);
+        axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGEBB_API}`, formdata).then((res) => {
+          const update = { displayName: data.name, photoURL: res.data.data.display_url };
+          updateUserProfile(update).then(console.log("updated"));
+        });
+      }
+    });
   };
   return (
     <div>
@@ -23,6 +35,16 @@ const Register = () => {
           <p className="text-sm text-gray-700 mb-6 border-b border-dotted border-gray-400 pb-2">Register with **ZapShift**</p>
 
           <form onSubmit={handleSubmit(handleregister)}>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">**Name**</label>
+              <input
+                {...register("name")}
+                type="text"
+                id="name"
+                name="name"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
+              />
+            </div>
             {/* Email Input */}
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -37,6 +59,25 @@ const Register = () => {
               />
             </div>
 
+            {/* image input */}
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              **File**
+            </label>
+            <input
+              type="file"
+              {...register("image", {
+                required: true,
+                validate: (value) => {
+                  const file = value?.[0];
+                  const alowed = ["image/png"];
+                  if (!alowed.includes(file.type)) {
+                    return "only png alowed";
+                  }
+                },
+              })}
+              className="file-input mb-2"
+            />
+            {errors.image?.message && <p>{errors.image?.message}</p>}
             {/* Password Input */}
             <div className="mb-2">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">

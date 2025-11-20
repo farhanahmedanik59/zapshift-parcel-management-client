@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AuthContex } from "./AuthContex";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 
 const AuthPrvider = ({ children }) => {
@@ -21,6 +21,10 @@ const AuthPrvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
+  const updateUserProfile = (update) => {
+    return updateProfile(auth.currentUser, update);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -34,7 +38,7 @@ const AuthPrvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
-  const authinfo = { registerUser, signIn, user, loading, logout };
+  const authinfo = { registerUser, signIn, user, loading, logout, updateUserProfile };
   return <AuthContex value={authinfo}>{children}</AuthContex>;
 };
 
