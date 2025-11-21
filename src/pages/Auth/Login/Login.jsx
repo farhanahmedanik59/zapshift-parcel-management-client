@@ -1,9 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import { Navigate, NavLink, useLocation, useNavigate } from "react-router";
 
 const Login = () => {
   const { signIn } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -11,7 +14,14 @@ const Login = () => {
   } = useForm();
   const handleLogin = (data) => {
     const { email, password } = data;
-    signIn(email, password).then((userCred) => console.log(userCred.user));
+    signIn(email, password).then((userCred) => {
+      console.log(userCred.user);
+      console.log(location);
+      if (userCred.user) {
+        const pathname = location.state || "/";
+        return navigate(pathname);
+      }
+    });
   };
   return (
     <div className="h-screen">
@@ -67,9 +77,9 @@ const Login = () => {
           {/* Register Link */}
           <p className="mt-6 text-sm text-center text-gray-700">
             Don't have any account?{" "}
-            <a href="#" className="text-green-600 font-medium hover:text-green-700">
+            <NavLink to={"/register"} className="text-green-600 font-medium hover:text-green-700">
               **Register**
-            </a>
+            </NavLink>
           </p>
 
           {/* OR Separator */}

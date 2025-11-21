@@ -5,7 +5,7 @@ import { auth } from "../../firebase/firebase.config";
 
 const AuthPrvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const signIn = (email, password) => {
     setLoading(true);
@@ -32,6 +32,7 @@ const AuthPrvider = ({ children }) => {
         setLoading(false);
       } else {
         setUser(null);
+        setLoading(false);
       }
     });
     return () => {
