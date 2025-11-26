@@ -1,6 +1,9 @@
 import React from "react";
+import Swal from "sweetalert2";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 const SendParcel = () => {
   const {
@@ -10,7 +13,9 @@ const SendParcel = () => {
     control,
     formState: { errors },
   } = useForm();
+  const { user } = useAuth();
 
+  const axiosSecure = useAxiosSecure();
   const serviceCenters = useLoaderData();
   const regions = serviceCenters.map((reg) => reg.region);
   const filtredRegions = [...new Set(regions)];
@@ -39,7 +44,28 @@ const SendParcel = () => {
         cost = minCharge + (samedistrict ? extraWeight * 40 : extraWeight * 40 + 40);
       }
     }
-    console.log(cost);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      const parceldata = { ...data, senderEmail: user.email };
+      if (result.isConfirmed) {
+        axiosSecure.post("/parcels", parceldata).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              title: "Parcel added",
+              text: "Your file has been added.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
   };
 
   return (

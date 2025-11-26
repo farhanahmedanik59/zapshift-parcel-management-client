@@ -19,7 +19,7 @@ const Navbar = () => {
         <NavLink>About Us</NavLink>
       </li>
       <li>
-        <NavLink to={"/rider"}>Be a Rider</NavLink>
+        <NavLink to={"/dashboard"}>Dashboard</NavLink>
       </li>
       <li>
         <NavLink to={"/send-parcel"}>Send a Parcel</NavLink>
