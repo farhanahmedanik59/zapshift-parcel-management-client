@@ -2,6 +2,8 @@ import React from "react";
 import { Link, Outlet } from "react-router";
 import Navbar from "../pages/shared/Navbar/Navbar";
 
+import { FiBox } from "react-icons/fi";
+
 const DashboardLayout = () => {
   return (
     <div>
@@ -83,9 +85,9 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Settings</span>
                 </button>
               </li>
-              <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
+              <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Parcel">
                 <Link to={"/dashboard/myparcels"}>
-                  {" "}
+                  <FiBox></FiBox>
                   <h1 className="is-drawer-close:hidden">My-Percel</h1>
                 </Link>
               </li>

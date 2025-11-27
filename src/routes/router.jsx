@@ -1,4 +1,3 @@
-import { createBrowserRouter } from "react-router";
 import Root from "../layouts/Root";
 import Home from "../pages/home/Home/Home";
 import Coverage from "../pages/coverage/Coverage/Coverage";
@@ -10,6 +9,9 @@ import PrivateRoute from "./PrivateRoute";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import { createBrowserRouter } from "react-router";
+import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -21,12 +23,12 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/coverage",
+        path: "coverage",
         Component: Coverage,
         loader: () => fetch("/warehouses.json").then((res) => res.json()),
       },
       {
-        path: "/rider",
+        path: "rider/:id",
         element: (
           <PrivateRoute>
             <Rider></Rider>
@@ -34,7 +36,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/send-parcel",
+        path: "send-parcel",
         element: (
           <PrivateRoute>
             <SendParcel></SendParcel>
@@ -49,11 +51,11 @@ export const router = createBrowserRouter([
     Component: AuthLayout,
     children: [
       {
-        path: "/login",
+        path: "login",
         Component: Login,
       },
       {
-        path: "/register",
+        path: "register",
         Component: Register,
       },
     ],
@@ -69,6 +71,14 @@ export const router = createBrowserRouter([
       {
         path: "myparcels",
         Component: MyParcels,
+      },
+      {
+        path: "payment/:parcelId",
+        Component: Payment,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
       },
     ],
   },

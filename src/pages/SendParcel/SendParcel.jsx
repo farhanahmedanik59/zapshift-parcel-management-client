@@ -44,6 +44,7 @@ const SendParcel = () => {
         cost = minCharge + (samedistrict ? extraWeight * 40 : extraWeight * 40 + 40);
       }
     }
+    data.cost = cost;
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -97,7 +98,7 @@ const SendParcel = () => {
 
             <div>
               <label className="font-medium">Parcel Weight (KG)</label>
-              <input className="w-full border p-2 rounded mt-1" {...register("parcelWeight", { required: true })} placeholder="Parcel Weight (KG)" />
+              <input type="number" className="w-full border p-2 rounded mt-1" {...register("parcelWeight", { required: true })} placeholder="Parcel Weight (KG)" />
             </div>
           </div>
 
