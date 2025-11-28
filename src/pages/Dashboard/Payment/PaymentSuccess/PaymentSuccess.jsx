@@ -1,8 +1,19 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const PaymentSuccess = () => {
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get("session_id");
+  const axiosSecure = useAxiosSecure();
+  console.log(sessionId);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionId) {
+      axiosSecure.patch(`/payment-success?session_id=${sessionId}`).then((res) => console.log(res.data));
+    }
+  }, [sessionId, axiosSecure]);
 
   const handleBackToDashboard = () => {
     navigate("/dashboard/myparcels"); // go back to dashboard

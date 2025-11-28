@@ -3,6 +3,7 @@ import { Link, Outlet } from "react-router";
 import Navbar from "../pages/shared/Navbar/Navbar";
 
 import { FiBox } from "react-icons/fi";
+import { VscHistory } from "react-icons/vsc";
 
 const DashboardLayout = () => {
   return (
@@ -34,7 +35,6 @@ const DashboardLayout = () => {
           </nav>
           {/* Page content here */}
           <Outlet></Outlet>
-          <div className="p-4">Page Content</div>
         </div>
 
         <div className="drawer-side is-drawer-close:overflow-visible">
@@ -87,8 +87,14 @@ const DashboardLayout = () => {
               </li>
               <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Parcel">
                 <Link to={"/dashboard/myparcels"}>
-                  <FiBox></FiBox>
+                  <FiBox className="size-4"></FiBox>
                   <h1 className="is-drawer-close:hidden">My-Percel</h1>
+                </Link>
+              </li>
+              <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="History">
+                <Link to={"/dashboard/payment-history"}>
+                  <VscHistory className="size-4 my-1"></VscHistory>
+                  <h1 className="is-drawer-close:hidden">History</h1>
                 </Link>
               </li>
             </ul>

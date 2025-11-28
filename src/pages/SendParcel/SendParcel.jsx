@@ -1,7 +1,7 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 
@@ -14,7 +14,7 @@ const SendParcel = () => {
     formState: { errors },
   } = useForm();
   const { user } = useAuth();
-
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const serviceCenters = useLoaderData();
   const regions = serviceCenters.map((reg) => reg.region);
@@ -54,7 +54,7 @@ const SendParcel = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((result) => {
-      const parceldata = { ...data, senderEmail: user.email };
+      const parceldata = { ...data, senderEmail: user.email, paymentStatus: "unpaid" };
       if (result.isConfirmed) {
         axiosSecure.post("/parcels", parceldata).then((res) => {
           if (res.data.insertedId) {
@@ -63,6 +63,7 @@ const SendParcel = () => {
               text: "Your file has been added.",
               icon: "success",
             });
+            navigate("/dashboard/myparcels");
           }
         });
       }
