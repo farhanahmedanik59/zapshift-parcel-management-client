@@ -8,7 +8,7 @@ import { FaArrowRight } from "react-icons/fa";
 const Banner = () => {
   return (
     <div>
-      <Carousel infiniteLoop={true} interval={2000}>
+      <Carousel infiniteLoop={true} autoPlay={true} interval={2000}>
         <div>
           <img src={banner1} />
         </div>

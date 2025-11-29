@@ -2,9 +2,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import { Navigate, NavLink, useLocation, useNavigate } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Login = () => {
-  const { signIn } = useAuth();
+  const { signIn, googleAuth } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const location = useLocation();
   const navigate = useNavigate();
   const {
@@ -21,6 +23,17 @@ const Login = () => {
         const pathname = location.state || "/";
         return navigate(pathname);
       }
+    });
+  };
+  const handleGoogleLogin = () => {
+    googleAuth().then((result) => {
+      const userinfo = {
+        email: result.user.email,
+        displayName: result.user.displayName,
+        photoURL: result.user.photoURL,
+      };
+      console.log(userinfo);
+      axiosSecure.post("/users", userinfo);
     });
   };
   return (
@@ -77,7 +90,7 @@ const Login = () => {
           {/* Register Link */}
           <p className="mt-6 text-sm text-center text-gray-700">
             Don't have any account?{" "}
-            <NavLink to={"/register"} className="text-green-600 font-medium hover:text-green-700">
+            <NavLink to={"/auth/register"} className="text-green-600 font-medium hover:text-green-700">
               **Register**
             </NavLink>
           </p>
@@ -88,7 +101,10 @@ const Login = () => {
           </div>
 
           {/* Login with Google Button */}
-          <button className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
             {/* You'd replace this with an actual Google icon */}
             <svg className="w-5 h-5 mr-2" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path

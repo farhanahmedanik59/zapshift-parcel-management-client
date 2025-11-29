@@ -24,28 +24,29 @@ const Testimonial = ({ promise }) => {
         </p>
       </section>
 
-      <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        slidesPerView={"4"}
-        coverflowEffect={{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        }}
-        pagination={true}
-        modules={[EffectCoverflow, Pagination]}
-        className="mySwiper"
-      >
-        {reviews.map((review) => (
-          <SwiperSlide key={review._id}>
-            <TertimonialCard review={review} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="md:max-w-[80%] md:mx-auto pb-14">
+        <Swiper
+          effect={"coverflow"}
+          grabCursor={true}
+          slidesPerView={"3"}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+          pagination={true}
+          modules={[EffectCoverflow, Pagination]}
+          className="mySwiper"
+        >
+          {reviews.map((review) => (
+            <SwiperSlide key={review._id}>
+              <TertimonialCard review={review} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </div>
   );
 };

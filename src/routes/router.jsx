@@ -29,7 +29,8 @@ export const router = createBrowserRouter([
         loader: () => fetch("/warehouses.json").then((res) => res.json()),
       },
       {
-        path: "rider/:id",
+        path: "rider",
+        loader: () => fetch("/warehouses.json").then((res) => res.json()),
         element: (
           <PrivateRoute>
             <Rider></Rider>
@@ -48,7 +49,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/",
+    path: "auth",
     Component: AuthLayout,
     children: [
       {

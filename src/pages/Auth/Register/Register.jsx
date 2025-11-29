@@ -3,9 +3,14 @@ import { useForm } from "react-hook-form";
 import { AuthContex } from "../../../contexts/AuthContex/AuthContex";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useLocation, useNavigate } from "react-router";
 
 const Register = () => {
-  const { registerUser, updateUserProfile } = useAuth();
+  const { registerUser, updateUserProfile, googleAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -18,10 +23,28 @@ const Register = () => {
         const formdata = new FormData();
         formdata.append("image", profileImage);
         axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGEBB_API}`, formdata).then((res) => {
+          axiosSecure
+            .post("/users", {
+              email: data.email,
+              displayName: data.name,
+              photoURL: res.data.data.display_url,
+            })
+            .then((res) => console.log(res));
           const update = { displayName: data.name, photoURL: res.data.data.display_url };
           updateUserProfile(update).then(console.log("updated"));
         });
       }
+    });
+  };
+
+  const handleGoogleLogin = () => {
+    googleAuth().then((result) => {
+      axiosSecure.post("/users", {
+        email: result.user.email,
+        displayName: result.user.displayName || "No Display Name",
+        photoURL: result.user.photoURL,
+      });
+      navigate(location.state || "/");
     });
   };
   return (
@@ -113,8 +136,8 @@ const Register = () => {
           {/* Register Link */}
           <p className="mt-6 text-sm text-center text-gray-700">
             Don't have any account?{" "}
-            <a href="#" className="text-green-600 font-medium hover:text-green-700">
-              **Register**
+            <a href="/auth/login" className="text-green-600 font-medium hover:text-green-700">
+              **Login**
             </a>
           </p>
 
@@ -124,7 +147,10 @@ const Register = () => {
           </div>
 
           {/* Login with Google Button */}
-          <button className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
             {/* You'd replace this with an actual Google icon */}
             <svg className="w-5 h-5 mr-2" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path

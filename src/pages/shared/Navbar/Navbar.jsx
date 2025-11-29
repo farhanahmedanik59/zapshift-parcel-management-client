@@ -10,7 +10,7 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink>Services</NavLink>
+        <NavLink to={"/"}>Home</NavLink>
       </li>
       <li>
         <NavLink to={"/coverage"}>Coverage</NavLink>
@@ -57,7 +57,7 @@ const Navbar = () => {
               Logout
             </a>
           ) : (
-            <Link to={"/login"} className=" btn bg-primary">
+            <Link to={"/auth/login"} className=" btn bg-primary">
               Login
             </Link>
           )}

@@ -11,7 +11,7 @@ const SalesTeams = () => {
   return (
     <div className="mt-6">
       <h1 className="text-3xl text-center">We've helped thousands of sales teams</h1>
-      <div className="mt-3.5">
+      <div className="mt-12 md:max-w-[50%] mx-auto">
         <Marquee>
           {logos.map((logo, index) => (
             <img key={index} src={logo} className="ml-9" />

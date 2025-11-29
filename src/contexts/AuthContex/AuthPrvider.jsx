@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { AuthContex } from "./AuthContex";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
-
+import { GoogleAuthProvider } from "firebase/auth";
 const AuthPrvider = ({ children }) => {
+  const provider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -16,6 +17,11 @@ const AuthPrvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   };
+
+  const googleAuth = () => {
+    return signInWithPopup(auth, provider);
+  };
+
   const registerUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -39,7 +45,7 @@ const AuthPrvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
-  const authinfo = { registerUser, signIn, user, loading, logout, updateUserProfile };
+  const authinfo = { registerUser, signIn, user, loading, logout, googleAuth, updateUserProfile };
   return <AuthContex value={authinfo}>{children}</AuthContex>;
 };
 
