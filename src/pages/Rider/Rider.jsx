@@ -1,11 +1,28 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import rider from "../../assets/agent-pending.png";
+import { useLoaderData } from "react-router";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 const Rider = () => {
-  const { register, handleSubmit } = useForm();
-
+  const { register, handleSubmit, control } = useForm();
+  const serviceCenters = useLoaderData();
+  const axiosSecure = useAxiosSecure();
+  const regions = serviceCenters.map((serviceCenter) => {
+    return serviceCenter.region;
+  });
+  const filterdRegions = [...new Set(regions)];
+  const region = useWatch({ control, name: "region" });
+  const filterdistrict = (region) => {
+    if (!region) {
+      return [];
+    }
+    console.log(region);
+    const matchedRegion = serviceCenters.filter((serviceCenter) => serviceCenter.region === region);
+    const district = matchedRegion.map((dis) => dis.district);
+    return district;
+  };
   const onSubmit = (data) => {
-    console.log("Form Data:", data);
+    axiosSecure.post("/riders", data).then((res) => console.log(res));
   };
   return (
     <div className="flex pb-12">
@@ -31,15 +48,14 @@ const Rider = () => {
             <input {...register("email")} type="email" placeholder="Your Email" className="w-full px-3 py-2 border rounded-md bg-gray-100" />
           </div>
 
-          {/* District */}
+          {/* Region */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Your District</label>
-            <select {...register("district")} className="w-full px-3 py-2 border rounded-md bg-gray-100">
+            <label className="block text-gray-700 font-medium mb-1">Your Region</label>
+            <select {...register("region")} className="w-full px-3 py-2 border rounded-md bg-gray-100">
               <option value="">Select your District</option>
-              <option value="Dhaka">Dhaka</option>
-              <option value="Chattogram">Chattogram</option>
-              <option value="Sylhet">Sylhet</option>
-              <option value="Rajshahi">Rajshahi</option>
+              {filterdRegions.map((region) => (
+                <option value={region}>{region}</option>
+              ))}
             </select>
           </div>
 
@@ -55,14 +71,14 @@ const Rider = () => {
             <input {...register("contact")} type="text" placeholder="Contact" className="w-full px-3 py-2 border rounded-md bg-gray-100" />
           </div>
 
-          {/* Wire-house */}
-          <div className="md:col-span-2">
-            <label className="block text-gray-700 font-medium mb-1">Which wire-house you want to work?</label>
-            <select {...register("warehouse")} className="w-full px-3 py-2 border rounded-md bg-gray-100">
-              <option value="">Select wire-house</option>
-              <option value="Warehouse A">Warehouse A</option>
-              <option value="Warehouse B">Warehouse B</option>
-              <option value="Warehouse C">Warehouse C</option>
+          {/* District */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Your District</label>
+            <select {...register("district")} className="w-full px-3 py-2 border rounded-md bg-gray-100">
+              <option value="">Select your District</option>
+              {filterdistrict(region).map((reg) => {
+                return <option value={reg}>{reg}</option>;
+              })}
             </select>
           </div>
 

@@ -97,6 +97,12 @@ const DashboardLayout = () => {
                   <h1 className="is-drawer-close:hidden">History</h1>
                 </Link>
               </li>
+              <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders">
+                <Link to={"/dashboard/approve-riders"}>
+                  <FiBox className="size-4"></FiBox>
+                  <h1 className="is-drawer-close:hidden">My-Percel</h1>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

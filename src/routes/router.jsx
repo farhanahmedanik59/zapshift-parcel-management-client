@@ -13,6 +13,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import { createBrowserRouter } from "react-router";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import ApproveRider from "../pages/Dashboard/ApproveRider/ApproveRider";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ export const router = createBrowserRouter([
       {
         path: "myparcels",
         Component: MyParcels,
+      },
+      {
+        path: "approve-riders",
+        Component: ApproveRider,
       },
       {
         path: "payment/:parcelId",

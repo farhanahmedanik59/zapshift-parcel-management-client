@@ -9,7 +9,6 @@ const SendParcel = () => {
   const {
     register,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
   } = useForm();
