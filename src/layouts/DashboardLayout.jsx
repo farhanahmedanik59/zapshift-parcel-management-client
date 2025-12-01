@@ -4,6 +4,7 @@ import Navbar from "../pages/shared/Navbar/Navbar";
 
 import { FiBox } from "react-icons/fi";
 import { VscHistory } from "react-icons/vsc";
+import { PiPersonSimpleBikeBold } from "react-icons/pi";
 
 const DashboardLayout = () => {
   return (
@@ -99,7 +100,7 @@ const DashboardLayout = () => {
               </li>
               <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders">
                 <Link to={"/dashboard/approve-riders"}>
-                  <FiBox className="size-4"></FiBox>
+                  <PiPersonSimpleBikeBold className="size-4"></PiPersonSimpleBikeBold>
                   <h1 className="is-drawer-close:hidden">My-Percel</h1>
                 </Link>
               </li>

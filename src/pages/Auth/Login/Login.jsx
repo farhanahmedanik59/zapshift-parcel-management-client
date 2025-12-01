@@ -17,8 +17,6 @@ const Login = () => {
   const handleLogin = (data) => {
     const { email, password } = data;
     signIn(email, password).then((userCred) => {
-      console.log(userCred.user);
-      console.log(location);
       if (userCred.user) {
         const pathname = location.state || "/";
         return navigate(pathname);

@@ -3,18 +3,54 @@ import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaUserCheck } from "react-icons/fa";
 import { IoPersonRemove } from "react-icons/io5";
+import { IoMdTrash } from "react-icons/io";
+import Swal from "sweetalert2";
 
 const ApproveRider = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: riders = [], isloadig } = useQuery({
+  const {
+    data: riders = [],
+    isloadig,
+    refetch,
+  } = useQuery({
     queryKey: ["riders", "pending"],
     queryFn: async () => {
       const res = await axiosSecure.get("/riders");
       return res.data;
     },
   });
-  const handleApprove = (_id) => {
-    console.log(_id);
+  const reject = (_id, status, email) => {
+    const updateInfo = { status: status, email: email };
+    axiosSecure.patch(`/riders/${_id}`, updateInfo).then((res) => {
+      if (res.data.modifiedCount) {
+        Swal.fire({
+          title: "Rider Approved!",
+          text: "You approved  the rider!",
+          icon: "success",
+        });
+        refetch();
+      }
+    });
+  };
+  const approve = (_id, status, email) => {
+    const updateInfo = { status: status, email: email };
+    axiosSecure.patch(`/riders/${_id}`, updateInfo).then((res) => {
+      if (res.data.modifiedCount) {
+        Swal.fire({
+          title: "Rider Approved!",
+          text: "You approved  the rider!",
+          icon: "success",
+        });
+        refetch();
+      }
+    });
+  };
+
+  const handleApprove = (_id, email) => {
+    approve(_id, "approved", email);
+  };
+  const handlerejected = (_id, email) => {
+    reject(_id, "rejected", email);
   };
   return (
     <div className="overflow-x-auto">
@@ -27,6 +63,7 @@ const ApproveRider = () => {
             <th>Email</th>
             <th>Region</th>
             <th>District</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -39,17 +76,21 @@ const ApproveRider = () => {
               <td>{rider.email}</td>
               <td>{rider.region}</td>
               <td>{rider.district}</td>
+              <td className={rider.status === "approved" ? "text-green-500" : "text-red-500"}>{rider.status}</td>
               <td>
                 <button
                   onClick={() => {
-                    handleApprove(rider._id);
+                    handleApprove(rider._id, rider.email);
                   }}
                   className="btn"
                 >
                   <FaUserCheck></FaUserCheck>
                 </button>
-                <button className="btn">
+                <button onClick={() => handlerejected(rider._id, rider.email)} className="md:mx-1.5 btn">
                   <IoPersonRemove></IoPersonRemove>
+                </button>
+                <button className="btn">
+                  <IoMdTrash></IoMdTrash>
                 </button>
               </td>
             </tr>

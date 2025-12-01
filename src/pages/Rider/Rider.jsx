@@ -3,7 +3,9 @@ import { useForm, useWatch } from "react-hook-form";
 import rider from "../../assets/agent-pending.png";
 import { useLoaderData } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 const Rider = () => {
+  const { user } = useAuth();
   const { register, handleSubmit, control } = useForm();
   const serviceCenters = useLoaderData();
   const axiosSecure = useAxiosSecure();
@@ -45,7 +47,7 @@ const Rider = () => {
           {/* Email */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">Your Email</label>
-            <input {...register("email")} type="email" placeholder="Your Email" className="w-full px-3 py-2 border rounded-md bg-gray-100" />
+            <input {...register("email")} value={user.email} type="email" placeholder="Your Email" className="w-full px-3 py-2 border rounded-md bg-gray-100" />
           </div>
 
           {/* Region */}
