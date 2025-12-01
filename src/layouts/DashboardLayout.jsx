@@ -5,8 +5,11 @@ import Navbar from "../pages/shared/Navbar/Navbar";
 import { FiBox } from "react-icons/fi";
 import { VscHistory } from "react-icons/vsc";
 import { PiPersonSimpleBikeBold } from "react-icons/pi";
+import { FaUser, FaUsers } from "react-icons/fa";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
+  const { role } = useRole();
   return (
     <div>
       <Navbar></Navbar>
@@ -98,12 +101,22 @@ const DashboardLayout = () => {
                   <h1 className="is-drawer-close:hidden">History</h1>
                 </Link>
               </li>
-              <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders">
-                <Link to={"/dashboard/approve-riders"}>
-                  <PiPersonSimpleBikeBold className="size-4"></PiPersonSimpleBikeBold>
-                  <h1 className="is-drawer-close:hidden">My-Percel</h1>
-                </Link>
-              </li>
+              {role === "admin" && (
+                <>
+                  <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="User-Management">
+                    <Link to={"/dashboard/users-management"}>
+                      <FaUsers className="size-4"></FaUsers>
+                      <h1 className="is-drawer-close:hidden">User-Management</h1>
+                    </Link>
+                  </li>
+                  <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders">
+                    <Link to={"/dashboard/approve-riders"}>
+                      <PiPersonSimpleBikeBold className="size-4"></PiPersonSimpleBikeBold>
+                      <h1 className="is-drawer-close:hidden">Approve Riders</h1>
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

@@ -14,6 +14,8 @@ import { createBrowserRouter } from "react-router";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import ApproveRider from "../pages/Dashboard/ApproveRider/ApproveRider";
+import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -77,7 +79,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "approve-riders",
-        Component: ApproveRider,
+        element: <ApproveRider></ApproveRider>,
       },
       {
         path: "payment/:parcelId",
@@ -90,6 +92,14 @@ export const router = createBrowserRouter([
       {
         path: "payment-history",
         Component: PaymentHistory,
+      },
+      {
+        path: "users-management",
+        element: (
+          <AdminRoute>
+            <UsersManagement></UsersManagement>,
+          </AdminRoute>
+        ),
       },
     ],
   },
