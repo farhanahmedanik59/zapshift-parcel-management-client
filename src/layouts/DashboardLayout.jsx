@@ -6,6 +6,7 @@ import { FiBox } from "react-icons/fi";
 import { VscHistory } from "react-icons/vsc";
 import { PiPersonSimpleBikeBold } from "react-icons/pi";
 import { FaUser, FaUsers } from "react-icons/fa";
+import { BsClipboard2Check } from "react-icons/bs";
 import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
@@ -45,7 +46,7 @@ const DashboardLayout = () => {
           <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
           <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
             {/* Sidebar content here */}
-            <ul className="menu w-full grow">
+            <ul className="menu w-full grow flex gap-2">
               {/* List item */}
               <li>
                 <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
@@ -58,7 +59,7 @@ const DashboardLayout = () => {
                     strokeWidth="2"
                     fill="none"
                     stroke="currentColor"
-                    className="my-1.5 inline-block size-4"
+                    className="my-1.5 inline-block size-5"
                   >
                     <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
                     <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -79,7 +80,7 @@ const DashboardLayout = () => {
                     strokeWidth="2"
                     fill="none"
                     stroke="currentColor"
-                    className="my-1.5 inline-block size-4"
+                    className="my-1.5 inline-block size-5"
                   >
                     <path d="M20 7h-9"></path>
                     <path d="M14 17H5"></path>
@@ -91,13 +92,13 @@ const DashboardLayout = () => {
               </li>
               <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Parcel">
                 <Link to={"/dashboard/myparcels"}>
-                  <FiBox className="size-4"></FiBox>
+                  <FiBox className="size-5"></FiBox>
                   <h1 className="is-drawer-close:hidden">My-Percel</h1>
                 </Link>
               </li>
               <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="History">
                 <Link to={"/dashboard/payment-history"}>
-                  <VscHistory className="size-4 my-1"></VscHistory>
+                  <VscHistory className="size-5 my-1"></VscHistory>
                   <h1 className="is-drawer-close:hidden">History</h1>
                 </Link>
               </li>
@@ -105,14 +106,20 @@ const DashboardLayout = () => {
                 <>
                   <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="User-Management">
                     <Link to={"/dashboard/users-management"}>
-                      <FaUsers className="size-4"></FaUsers>
+                      <FaUsers className="size-5"></FaUsers>
                       <h1 className="is-drawer-close:hidden">User-Management</h1>
                     </Link>
                   </li>
                   <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders">
                     <Link to={"/dashboard/approve-riders"}>
-                      <PiPersonSimpleBikeBold className="size-4"></PiPersonSimpleBikeBold>
+                      <PiPersonSimpleBikeBold className="size-5"></PiPersonSimpleBikeBold>
                       <h1 className="is-drawer-close:hidden">Approve Riders</h1>
+                    </Link>
+                  </li>
+                  <li className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign Parcel">
+                    <Link to={"/dashboard/assign-parcels"}>
+                      <BsClipboard2Check className="size-5"></BsClipboard2Check>
+                      <h1 className="is-drawer-close:hidden">Assign Parcel</h1>
                     </Link>
                   </li>
                 </>

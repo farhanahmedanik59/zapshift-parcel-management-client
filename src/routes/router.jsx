@@ -16,6 +16,7 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import ApproveRider from "../pages/Dashboard/ApproveRider/ApproveRider";
 import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
 import AdminRoute from "./AdminRoute";
+import AssignRider from "../pages/Dashboard/AssignRider/AssignRider";
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ export const router = createBrowserRouter([
             <UsersManagement></UsersManagement>,
           </AdminRoute>
         ),
+      },
+      {
+        path: "assign-parcels",
+        Component: AssignRider,
       },
     ],
   },

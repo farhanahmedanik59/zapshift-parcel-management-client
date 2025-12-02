@@ -64,6 +64,7 @@ const ApproveRider = () => {
             <th>Region</th>
             <th>District</th>
             <th>Status</th>
+            <th>Working Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -77,6 +78,7 @@ const ApproveRider = () => {
               <td>{rider.region}</td>
               <td>{rider.district}</td>
               <td className={rider.status === "approved" ? "text-green-500" : "text-red-500"}>{rider.status}</td>
+              <td>{rider.workStatus}</td>
               <td>
                 <button
                   onClick={() => {
